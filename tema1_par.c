@@ -166,7 +166,7 @@ void *julia(void *arg) {
 
 	int w, h, i;
 
-	for (int k = 0; i < N; ++k)
+	for (int k = start; i < end; ++k)
 	{
 		
 	for (w = 0; w < width; w++) {
@@ -200,7 +200,7 @@ void *julia(void *arg) {
 
 	}
 
-
+	pthread_exit(NULL);
 
 }
 
@@ -268,7 +268,7 @@ void *mandelbrot(void *arg) {
 	int w, h, i;
 
 
-
+	for(int k = start; k < end; k++){
 
 	for (w = 0; w < width; w++) {
 		for (h = 0; h < height; h++) {
@@ -289,6 +289,7 @@ void *mandelbrot(void *arg) {
 			result[h][w] = step % 256;
 		}
 	}
+	}
 
 	// transforma rezultatul din coordonate matematice in coordonate ecran
 	// TODO: de paralelizat
@@ -297,6 +298,7 @@ void *mandelbrot(void *arg) {
 		result[i] = result[height - i - 1];
 		result[height - i - 1] = aux;
 	}
+	pthread_exit(NULL);
 }
 
 
@@ -361,7 +363,7 @@ int main(int argc, char *argv[])
 	data *thread_data = (data* ) malloc(sizeof (data) * P);
 
 	int r;
-	void *status;
+	//void *status;
 
 	// Julia:
 	// - se citesc parametrii de intrare
